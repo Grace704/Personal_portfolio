@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --bg: #060410;
+  --navy: #090620;
+  --surface: rgba(139, 92, 246, 0.06);
+  --surface-hover: rgba(139, 92, 246, 0.11);
+  --border: rgba(139, 92, 246, 0.18);
+  --border-pink: rgba(219, 39, 119, 0.22);
+  --violet: #7c3aed;
+  --purple: #9333ea;
+  --pink: #be185d;
+  --magenta: #db2777;
+  --violet-light: #a78bfa;
+  --pink-light: #f472b6;
+  --text: #ede9ff;
+  --text-muted: rgba(237, 233, 255, 0.5);
+  --text-subtle: rgba(237, 233, 255, 0.28);
+  --glow-violet: 0 0 80px rgba(124, 58, 237, 0.18);
+  --glow-pink: 0 0 80px rgba(219, 39, 119, 0.14);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 2px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Role cycling animation */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  15% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.role-text {
+  animation: fadeUp 2.6s ease forwards;
+}
+
+/* Timeline line */
+.timeline-line {
+  background: linear-gradient(to bottom, var(--violet), var(--magenta));
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--violet-light) 0%, var(--pink-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass surface */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+/* Thin glow border on hover */
+.glow-border {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glow-border:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.12), inset 0 0 30px rgba(124, 58, 237, 0.04);
+}
+
+/* Project card tilt */
+.tilt-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+.tilt-card:hover {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.1);
+}
+
+/* Skill tag */
+.skill-tag {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: var(--violet-light);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+}
+
+/* Hobby image */
+.hobby-img {
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hobby-img img {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+  filter: brightness(0.75) saturate(0.9);
+}
+.hobby-img:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.55) saturate(0.8);
+}
+.hobby-img .caption {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.hobby-img:hover .caption {
+  opacity: 1;
+  transform: translateY(0);
+}

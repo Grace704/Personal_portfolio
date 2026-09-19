@@ -1,0 +1,10 @@
+{
+  "description": "Streamline project management and collaboration for teams with intuitive task tracking, real-time updates, and seamless communication features.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
