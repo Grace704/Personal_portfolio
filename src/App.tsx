@@ -9,236 +9,279 @@ const NAV_ITEMS = [
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'competitions', label: 'Competitions' },
+  { id: 'certifications', label: 'Certifications' },
   { id: 'education', label: 'Education' },
   { id: 'hobbies', label: 'Hobbies' },
 ]
 
-const ROLES = ['Designer', 'Developer', 'Creator', 'Problem Solver', 'Builder']
+const ROLES = ['Actuarial Science', 'Data Analysis', 'Quant Research', 'Problem Solver', 'Table Tennis Player']
 
-const EXPERIENCE = [
+type ExperienceTrack = 'All' | 'Data Analysis' | 'Leadership'
+
+const EXPERIENCE: {
+  role: string
+  org: string
+  dates: string
+  desc: string
+  tags: string[]
+  track: Exclude<ExperienceTrack, 'All'>
+}[] = [
   {
-    role: 'Software Engineering Intern',
-    org: 'TechCorp AI',
-    dates: 'May – Aug 2025',
-    desc: 'Built full-stack features for an AI-powered analytics platform. Led migration from REST to GraphQL, reducing client payload size by 40%.',
-    tags: ['React', 'TypeScript', 'GraphQL', 'Python', 'AWS'],
+    role: 'Data Analyst',
+    org: 'EcoServants',
+    dates: '2026',
+    desc: 'Analyzed website traffic, survey data, and IRS / ProPublica foundation records to support a nonprofit’s digital strategy and funding research.',
+    tags: ['Python', 'R', 'pandas', 'Google Analytics'],
+    track: 'Data Analysis',
   },
   {
-    role: 'UI/UX Design Lead',
-    org: 'University Product Studio',
-    dates: 'Sep 2024 – Apr 2025',
-    desc: 'Directed design for a cross-disciplinary student product team. Delivered high-fidelity prototypes adopted by two campus organizations.',
-    tags: ['Figma', 'User Research', 'Design Systems', 'Prototyping'],
+    role: 'Assistant Manager',
+    org: 'Dairy Queen Grill & Chill',
+    dates: 'May – Aug 2026',
+    desc: 'Ran daily store operations — opening, inventory, cake prep, and crew scheduling. Trained and interviewed new employees, and took on full manager responsibilities during a manager’s absence.',
+    tags: ['Operations', 'Training', 'Customer Service'],
+    track: 'Leadership',
   },
   {
-    role: 'Web Development Mentor',
-    org: 'Girls Who Code Club',
-    dates: 'Jan – Dec 2024',
-    desc: 'Mentored 15 students in HTML, CSS, JavaScript, and React fundamentals through weekly workshops and project-based curriculum.',
-    tags: ['JavaScript', 'React', 'Teaching', 'CSS'],
+    role: 'Orientation Leader',
+    org: 'University of Waterloo',
+    dates: '2026',
+    desc: 'Coordinated a team of roughly 350 orientation staff supporting incoming students, helping welcome and integrate a first-year class of about 2,000.',
+    tags: ['Communication', 'Event Coordination'],
+    track: 'Leadership',
   },
   {
-    role: 'Research Assistant',
-    org: 'HCI Lab, MIT CSAIL',
-    dates: 'Jun – Aug 2023',
-    desc: 'Assisted research on adaptive interfaces and accessibility. Implemented prototypes evaluated in controlled user studies.',
-    tags: ['Human-Computer Interaction', 'Python', 'User Studies', 'Figma'],
+    role: 'Ping-Pong Coach',
+    org: 'Winnipeg Table Tennis Training Center',
+    dates: 'Sep 2023 – Jun 2025',
+    desc: 'Coached younger table tennis players at the training center, drawing on years of competitive experience on the Manitoba provincial team.',
+    tags: ['Coaching', 'Mentorship'],
+    track: 'Leadership',
+  },
+  {
+    role: 'Team Captain',
+    org: 'Manitoba Provincial Table Tennis Team',
+    dates: '2018 – 2024',
+    desc: 'Represented Manitoba at the provincial level for six years, serving as a team leader and captain. Competed at the 2023 Canada Winter Games, winning silver in doubles.',
+    tags: ['Leadership', 'Teamwork', 'Competition'],
+    track: 'Leadership',
+  },
+  {
+    role: 'Robotics Club — Founder',
+    org: "St. John's-Ravenscourt",
+    dates: 'High School',
+    desc: 'Founded a robotics club after being turned down by nine teachers before finding support. Led the team to a 3rd-place finish at a provincial robotics competition.',
+    tags: ['Initiative', 'Robotics'],
+    track: 'Leadership',
   },
 ]
 
-type ProjectCategory = 'All' | 'Web' | 'Data' | 'AI' | 'Design' | 'Other'
+type ProjectCategory = 'All' | 'Actuarial & Finance' | 'Data Analysis' | 'Project & Reading'
 
 const PROJECTS: {
   title: string
   desc: string
   tags: string[]
-  category: ProjectCategory
+  category: Exclude<ProjectCategory, 'All'>
   featured: boolean
-  image: string
   github?: string
   demo?: string
 }[] = [
   {
-    title: 'Aurora',
-    desc: 'An AI-powered mood board generator that translates written descriptions into cohesive visual palettes and image collections using multimodal LLMs.',
-    tags: ['Next.js', 'OpenAI API', 'Tailwind CSS', 'Postgres'],
-    category: 'AI',
+    title: 'Quantitative Equity Research Platform',
+    desc: 'A Python platform that takes a stock ticker and builds a full valuation pipeline — DCF, comparable, and P/E-based models layered with Monte Carlo simulation and sensitivity analysis to estimate intrinsic value under uncertainty.',
+    tags: ['Python', 'pandas', 'yfinance', 'Statistics', 'Valuation'],
+    category: 'Actuarial & Finance',
     featured: true,
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&h=600&fit=crop&auto=format',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'DataViz Pro',
-    desc: 'Interactive data visualization dashboard with real-time streaming, custom chart library, and natural language query support.',
-    tags: ['React', 'D3.js', 'WebSockets', 'FastAPI'],
-    category: 'Data',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=480&fit=crop&auto=format',
     github: '#',
   },
   {
-    title: 'Bloom',
-    desc: 'Plant care companion app with personalized watering schedules, growth tracking, and disease diagnosis via computer vision.',
-    tags: ['React Native', 'TensorFlow', 'SQLite', 'Expo'],
-    category: 'AI',
+    title: 'Life Trajectory',
+    desc: 'A productivity analytics platform for tracking academics, career preparation, goals, reflection, and daily priorities in one minimalist dashboard.',
+    tags: ['Productivity', 'Data', 'Personal Analytics'],
+    category: 'Data Analysis',
     featured: false,
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format',
-    github: '#',
-    demo: '#',
   },
   {
-    title: 'Cipher',
-    desc: 'Elegant browser extension for end-to-end encrypted note-taking with zero-knowledge architecture.',
-    tags: ['TypeScript', 'WebCrypto API', 'Svelte'],
-    category: 'Web',
+    title: 'Directed Reading Program',
+    desc: 'A guided reading program on random walks on finite groups, exploring how probability and algebra combine to explain how randomness spreads and mixes over time.',
+    tags: ['Probability', 'Markov Chains', 'Group Theory'],
+    category: 'Project & Reading',
     featured: false,
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format',
-    github: '#',
-  },
-  {
-    title: 'Typeface Study',
-    desc: 'A typographic research project exploring variable font aesthetics across international scripts. Published as an interactive digital essay.',
-    tags: ['CSS', 'Variable Fonts', 'Design Research'],
-    category: 'Design',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=700&h=480&fit=crop&auto=format',
-    demo: '#',
   },
 ]
 
-const SKILL_CATEGORIES = ['Languages', 'Frameworks', 'Tools', 'Design', 'Data / AI'] as const
+const PROJECT_SYMBOL: Record<ProjectCategory, string> = {
+  All: 'π',
+  'Actuarial & Finance': 'Σ',
+  'Data Analysis': '∫',
+  'Project & Reading': '∼',
+}
+
+const SKILL_CATEGORIES = ['Actuarial & Quant', 'Data & Programming', 'AI & ML'] as const
 
 const SKILLS: Record<string, { name: string; x: number; y: number }[]> = {
-  Languages: [
-    { name: 'Python', x: 80, y: 55 },
-    { name: 'TypeScript', x: 160, y: 30 },
-    { name: 'JavaScript', x: 240, y: 60 },
-    { name: 'Java', x: 130, y: 100 },
-    { name: 'Swift', x: 210, y: 110 },
-    { name: 'SQL', x: 310, y: 40 },
+  'Actuarial & Quant': [
+    { name: 'Probability', x: 80, y: 55 },
+    { name: 'Statistics', x: 160, y: 30 },
+    { name: 'Financial Mathematics', x: 250, y: 60 },
+    { name: 'Risk Analysis', x: 130, y: 100 },
+    { name: 'Equity Valuation', x: 310, y: 40 },
+    { name: 'Backtesting', x: 220, y: 115 },
   ],
-  Frameworks: [
-    { name: 'React', x: 90, y: 50 },
-    { name: 'Next.js', x: 180, y: 25 },
-    { name: 'Tailwind CSS', x: 270, y: 60 },
-    { name: 'FastAPI', x: 150, y: 105 },
-    { name: 'Three.js', x: 330, y: 45 },
-    { name: 'React Native', x: 220, y: 115 },
+  'Data & Programming': [
+    { name: 'Python', x: 70, y: 50 },
+    { name: 'R', x: 150, y: 28 },
+    { name: 'SQL', x: 230, y: 58 },
+    { name: 'pandas', x: 115, y: 105 },
+    { name: 'Data Cleaning', x: 200, y: 108 },
+    { name: 'Google Analytics', x: 320, y: 40 },
   ],
-  Tools: [
-    { name: 'Git', x: 75, y: 50 },
-    { name: 'Figma', x: 165, y: 28 },
-    { name: 'Docker', x: 255, y: 55 },
-    { name: 'VS Code', x: 140, y: 105 },
-    { name: 'Notion', x: 320, y: 40 },
-    { name: 'Vercel', x: 215, y: 110 },
-  ],
-  Design: [
-    { name: 'UI/UX Design', x: 95, y: 55 },
-    { name: 'Branding', x: 195, y: 28 },
-    { name: 'Figma', x: 290, y: 65 },
-    { name: 'Motion Design', x: 155, y: 108 },
-    { name: 'Illustration', x: 335, y: 38 },
-  ],
-  'Data / AI': [
-    { name: 'TensorFlow', x: 80, y: 52 },
-    { name: 'scikit-learn', x: 185, y: 28 },
-    { name: 'Pandas', x: 275, y: 60 },
-    { name: 'OpenAI API', x: 150, y: 108 },
-    { name: 'PyTorch', x: 320, y: 42 },
-    { name: 'HuggingFace', x: 225, y: 115 },
+  'AI & ML': [
+    { name: 'Machine Learning', x: 90, y: 52 },
+    { name: 'ChatGPT', x: 195, y: 28 },
+    { name: 'Claude', x: 285, y: 60 },
+    { name: 'GitHub Copilot', x: 160, y: 108 },
   ],
 }
 
 const CONSTELLATION_EDGES: Record<string, [number, number][]> = {
-  Languages: [[0,1],[1,2],[0,3],[2,4],[1,5],[3,4]],
-  Frameworks: [[0,1],[1,2],[0,3],[2,4],[1,5],[3,5]],
-  Tools: [[0,1],[1,2],[0,3],[1,4],[2,5],[3,4]],
-  Design: [[0,1],[1,2],[0,3],[1,4],[2,3]],
-  'Data / AI': [[0,1],[1,2],[0,3],[1,4],[2,5],[3,4]],
+  'Actuarial & Quant': [[0, 1], [1, 2], [0, 3], [2, 4], [1, 5], [3, 4]],
+  'Data & Programming': [[0, 1], [1, 2], [0, 3], [1, 4], [2, 5], [3, 4]],
+  'AI & ML': [[0, 1], [1, 2], [0, 3], [2, 3]],
 }
 
-const COMPETITIONS = [
+const FEATURED_COMPETITION = {
+  name: 'Canada Winter Games',
+  year: '2023',
+  result: 'Silver Medal, Table Tennis Doubles',
+  desc: 'Represented Manitoba in table tennis doubles at the 2023 Canada Winter Games, competing against the top junior players in the country.',
+}
+
+const CASE_COMPETITIONS: {
+  name: string
+  year: string
+  result: string
+  desc: string
+  upcoming?: boolean
+}[] = [
   {
-    name: 'HackMIT',
-    year: '2025',
-    result: '1st Place',
-    desc: 'Built Aurora in 24 hours. Judged on technical complexity, design, and real-world impact. Awarded best overall project out of 280 submissions.',
-    accent: true,
+    name: 'ASNA Case Competition',
+    year: 'Upcoming',
+    result: 'In preparation',
+    desc: 'Preparing for this upcoming case competition.',
+    upcoming: true,
   },
   {
-    name: 'Google Solution Challenge',
-    year: '2024',
-    result: 'Global Top 100 Finalist',
-    desc: 'Designed and presented Bloom — a plant care AI app addressing sustainable urban farming — to Google engineers and executives.',
-    accent: false,
+    name: 'Quantify AI',
+    year: 'Fall 2026',
+    result: 'Advanced to Round 2',
+    desc: 'Served as risk analyst and data lead for team Quartile One in an insurance analytics competition, advancing to the second round.',
   },
   {
-    name: 'Regional Robotics Championship',
-    year: '2024',
-    result: 'Team Champion',
-    desc: 'Led software and sensor fusion for an autonomous navigation robot. First regional win for our university team in four years.',
-    accent: false,
+    name: 'SOA Case Study Competition',
+    year: 'March 2026',
+    result: 'Case competition',
+    desc: 'Analyzed a space insurance case study with my team and developed a recommendation for the product.',
   },
   {
-    name: 'ICPC North America Regional',
-    year: '2023',
-    result: '12th Place',
-    desc: 'Competitive programming contest; team solved 8 of 11 algorithmic problems in five hours.',
-    accent: false,
+    name: 'RISCC',
+    year: 'February 2026',
+    result: 'Case competition',
+    desc: 'Worked with a team to build a customized life insurance recommendation for a family, based on their needs and financial situation.',
+  },
+  {
+    name: 'Waterloo Consulting Case Competition',
+    year: 'Winter 2026',
+    result: 'Case competition',
+    desc: 'Led data analysis, cleaning, and visualization for a case on how much Aramco should invest in new energy, and helped size and defend the investment split across areas.',
+  },
+  {
+    name: 'UTD ASA Case Competition',
+    year: 'Fall 2025',
+    result: 'Case competition',
+    desc: 'Taught myself loss triangles and the chain ladder method in my first case competition to build and present a reserving recommendation for a workers\' compensation case.',
+  },
+  {
+    name: 'HackRx',
+    year: 'Fall 2025',
+    result: '2nd Place',
+    desc: 'Placed second on a team of four, designing a Figma prototype with an AI component to track patients\' medication routines and well-being.',
+  },
+]
+
+const CERTIFICATIONS = [
+  {
+    name: 'SOA Exam P',
+    body: 'Society of Actuaries',
+    status: 'Passed',
+    desc: 'Probability — covers the probability tools used to assess and quantify risk, a foundational exam for actuarial and quantitative risk work.',
+  },
+  {
+    name: 'SOA Exam FM',
+    body: 'Society of Actuaries',
+    status: 'Passed',
+    desc: 'Financial Mathematics — covers interest theory and time value of money concepts that underpin actuarial and financial modeling.',
   },
 ]
 
 const EDUCATION = [
   {
-    school: 'Massachusetts Institute of Technology',
-    program: 'B.S. Computer Science & Engineering',
-    years: '2022 – 2026',
-    coursework: ['Algorithms', 'Machine Learning', 'Computer Vision', 'Distributed Systems', 'HCI', 'Computational Biology'],
-    activities: ['HackMIT Organizer', 'Society of Women Engineers', 'MIT Technology Review'],
-    awards: 'Presidential Scholar, Dean\'s List 2022–2025',
+    school: 'University of Waterloo',
+    program: 'Honours Mathematics, Co-op',
+    years: '2025 – Present',
+    coursework: ['MATH 135', 'MATH 138', 'MATH 237', 'MATH 235', 'STAT 230', 'CS 135', 'CS 136', 'ECON 101'],
+    activities: ['Orientation Leader', 'Directed Reading Program (Fall 2026)', 'Math Club'],
+    awards: '~85% average, working toward 90%+',
   },
   {
-    school: 'Westview High School',
+    school: "St. John's-Ravenscourt",
     program: 'High School Diploma',
-    years: '2018 – 2022',
-    coursework: ['AP Computer Science A', 'AP Calculus BC', 'AP Physics C', 'AP Art & Design'],
-    activities: ['Robotics Club Captain', 'Debate Team', 'Yearbook Editor'],
-    awards: 'Valedictorian, National Merit Scholar',
+    years: 'Manitoba',
+    coursework: [] as string[],
+    activities: ['Robotics Club Founder', 'Math Club', 'Ping-Pong Club', 'Table Tennis'],
+    awards: '',
+  },
+  {
+    school: 'University of Manitoba',
+    program: 'MATH 136 (Concurrent Study)',
+    years: '2025',
+    coursework: ['MATH 136'],
+    activities: ['Completed while in high school'],
+    awards: 'Grade: A',
   },
 ]
 
 const HOBBIES = [
   {
-    name: 'Photography',
-    caption: 'Capturing quiet moments and urban geometry.',
-    image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=600&h=700&fit=crop&auto=format',
-    wide: false,
-  },
-  {
-    name: 'Travel',
-    caption: 'Thirty-two countries and counting.',
-    image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=900&h=600&fit=crop&auto=format',
+    name: 'Table Tennis',
+    caption: 'Competed for Manitoba at the provincial level for six years and won silver in doubles at the 2023 Canada Winter Games.',
+    mark: 'TT',
     wide: true,
   },
   {
-    name: 'Music',
-    caption: 'Piano since age six. Currently into ambient and jazz fusion.',
-    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=500&fit=crop&auto=format',
-    wide: false,
-  },
-  {
-    name: 'Illustration',
-    caption: 'Character design and editorial illustration in my sketchbooks.',
-    image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=500&fit=crop&auto=format',
-    wide: false,
-  },
-  {
-    name: 'Cooking',
-    caption: 'Cooking is just chemistry you can eat.',
-    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&h=600&fit=crop&auto=format',
+    name: 'Quantitative Curiosity',
+    caption: 'Small experiments in blackjack probability, stock volatility, and backtesting — mostly just to see what the numbers say.',
+    mark: 'Σ',
     wide: true,
+  },
+  {
+    name: 'Reading & English Practice',
+    caption: "Working through books like Alice's Adventures in Wonderland to build vocabulary and think more naturally in English.",
+    mark: 'Aa',
+    wide: false,
+  },
+  {
+    name: 'Cryptography',
+    caption: 'A long-running interest since grade 10 — RSA, mathematical cryptography, and post-quantum schemes like Kyber and Dilithium.',
+    mark: 'RSA',
+    wide: false,
+  },
+  {
+    name: 'Coaching & Mentorship',
+    caption: 'Coached younger table tennis players from 2023–2025, and tutored students academically.',
+    mark: 'PP',
+    wide: false,
   },
 ]
 
@@ -427,14 +470,14 @@ function Nav({ active }: { active: string }) {
       </button>
 
       {/* Desktop nav */}
-      <div className="hidden md:flex items-center gap-7">
+      <div className="hidden md:flex items-center gap-6">
         {NAV_ITEMS.map(({ id, label }) => (
           <button
             key={id}
             onClick={() => scrollTo(id)}
             style={{
               fontFamily: 'var(--font-body)',
-              fontSize: '0.82rem',
+              fontSize: '0.8rem',
               fontWeight: 500,
               letterSpacing: '0.03em',
               color: active === id ? 'var(--violet-light)' : 'var(--text-muted)',
@@ -560,7 +603,7 @@ function Hero() {
             marginBottom: '1.5rem',
           }}
         >
-          Portfolio · 2026
+          Actuarial Science · Data Analysis
         </p>
 
         <h1
@@ -590,8 +633,9 @@ function Hero() {
             lineHeight: 1.7,
           }}
         >
-          I build thoughtful digital experiences — from data pipelines to polished interfaces.
-          Currently studying at MIT, always learning.
+          I'm an Honours Mathematics student at the University of Waterloo. I'm building two main
+          paths — actuarial science and data analysis — and I like turning messy data and risk
+          problems into something useful.
         </p>
 
         <div
@@ -687,149 +731,126 @@ function Hero() {
 
 // ─── About ────────────────────────────────────────────────────────────────────
 
+const PILLARS = [
+  {
+    label: '01 · Actuarial Science',
+    title: 'Probability, risk, and financial mathematics.',
+    desc: 'I passed SOA Exams P and FM, competed in insurance analytics, and apply the same tools to quantitative finance — valuation models and strategy backtests.',
+  },
+  {
+    label: '02 · Data Analysis',
+    title: 'Messy real-world data, cleaned and explained.',
+    desc: 'Python, R, and SQL on nonprofit funding records, web analytics at EcoServants, and productivity analytics for my own goals.',
+  },
+]
+
 function About() {
   return (
     <section
       id="about"
       style={{ padding: 'clamp(80px, 12vw, 140px) clamp(1.5rem, 8vw, 8rem)' }}
     >
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: 'clamp(3rem, 6vw, 6rem)',
-          alignItems: 'start',
-          maxWidth: 1100,
-          margin: '0 auto',
-        }}
-      >
-        {/* Photo column */}
-        <div className="reveal" style={{ position: 'relative' }}>
-          <div
-            style={{
-              width: '100%',
-              maxWidth: 400,
-              aspectRatio: '3/4',
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(219,39,119,0.15))',
-              border: '1px solid var(--border)',
-              borderRadius: 4,
-              overflow: 'hidden',
-              position: 'relative',
-            }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=667&fit=crop&auto=format"
-              alt="Portrait placeholder"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.7) brightness(0.7)' }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(135deg, rgba(124,58,237,0.25), rgba(219,39,119,0.2))',
-                mixBlendMode: 'multiply',
-              }}
-            />
-          </div>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <p
+          className="reveal"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: '0.75rem',
+            fontWeight: 500,
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color: 'var(--violet-light)',
+            marginBottom: '1.25rem',
+          }}
+        >
+          About Me
+        </p>
+        <h2
+          className="font-display reveal reveal-delay-1"
+          style={{
+            fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
+            lineHeight: 1.08,
+            fontWeight: 400,
+            fontStyle: 'italic',
+            color: 'var(--text)',
+            marginBottom: '1.75rem',
+          }}
+        >
+          Finding structure in disorder.
+        </h2>
+        <p
+          className="reveal reveal-delay-2"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: '1.05rem',
+            fontWeight: 300,
+            color: 'var(--text-muted)',
+            lineHeight: 1.8,
+            maxWidth: 720,
+            marginBottom: '3rem',
+          }}
+        >
+          Two threads run through my work. I like problems where the answer isn't obvious, and
+          outside of school I compete in table tennis and lead teams — from a restaurant crew to
+          a robotics club I founded in high school after nine rejections.
+        </p>
 
-          {/* Decorative accent line */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 24,
-              left: -16,
-              width: 3,
-              height: '60%',
-              background: 'linear-gradient(to bottom, var(--violet), var(--magenta))',
-              borderRadius: 2,
-            }}
-          />
+        <div
+          className="reveal reveal-delay-3"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1.5rem',
+            marginBottom: '3rem',
+          }}
+        >
+          {PILLARS.map(p => (
+            <div
+              key={p.label}
+              className="glow-border"
+              style={{
+                padding: '2rem',
+                border: '1px solid var(--border)',
+                borderRadius: 3,
+                background: 'var(--surface)',
+              }}
+            >
+              <p style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--pink-light)', marginBottom: '0.9rem' }}>
+                {p.label}
+              </p>
+              <h3 className="font-display" style={{ fontSize: '1.55rem', fontStyle: 'italic', fontWeight: 400, color: 'var(--text)', lineHeight: 1.2, marginBottom: '0.9rem' }}>
+                {p.title}
+              </h3>
+              <p style={{ fontSize: '0.92rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75 }}>
+                {p.desc}
+              </p>
+            </div>
+          ))}
         </div>
 
-        {/* Text column */}
-        <div>
-          <p
-            className="reveal"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '0.75rem',
-              fontWeight: 500,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'var(--violet-light)',
-              marginBottom: '1.25rem',
-            }}
-          >
-            About Me
-          </p>
-          <h2
-            className="font-display reveal reveal-delay-1"
-            style={{
-              fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
-              lineHeight: 1.08,
-              fontWeight: 400,
-              fontStyle: 'italic',
-              color: 'var(--text)',
-              marginBottom: '2rem',
-            }}
-          >
-            Building things that feel alive.
-          </h2>
-          <p
-            className="reveal reveal-delay-2"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '1.05rem',
-              fontWeight: 300,
-              color: 'var(--text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '1.5rem',
-            }}
-          >
-            I'm a computer science student at MIT with a deep interest in the intersection of design
-            and engineering. I believe the best products are built when aesthetic intention and
-            technical craft are inseparable.
-          </p>
-          <p
-            className="reveal reveal-delay-3"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '1rem',
-              fontWeight: 300,
-              color: 'var(--text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '2.5rem',
-            }}
-          >
-            Currently focused on AI interfaces and human-computer interaction research. When I'm not
-            writing code or sketching wireframes, I'm traveling, playing piano, or hunting for the
-            perfect photograph.
-          </p>
-
-          <div
-            className="reveal reveal-delay-4"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1rem 2.5rem',
-            }}
-          >
-            {[
-              ['Location', 'Cambridge, MA'],
-              ['Focus', 'AI & Design Systems'],
-              ['Available', 'Summer 2026 Internships'],
-              ['Languages', 'EN · ZH · FR'],
-            ].map(([label, value]) => (
-              <div key={label}>
-                <p style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.3rem' }}>
-                  {label}
-                </p>
-                <p style={{ fontSize: '0.95rem', fontWeight: 400, color: 'var(--text)' }}>
-                  {value}
-                </p>
-              </div>
-            ))}
-          </div>
+        <div
+          className="reveal reveal-delay-4"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem 2.5rem',
+          }}
+        >
+          {[
+            ['Location', 'Waterloo, Ontario, Canada'],
+            ['Program', 'Honours Mathematics, Co-op'],
+            ['Focus', 'Actuarial Science & Data Analysis'],
+            ['Certifications', 'SOA Exam P · FM'],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <p style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.3rem' }}>
+                {label}
+              </p>
+              <p style={{ fontSize: '0.95rem', fontWeight: 400, color: 'var(--text)' }}>
+                {value}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -838,8 +859,12 @@ function About() {
 
 // ─── Experience ───────────────────────────────────────────────────────────────
 
+const EXPERIENCE_TRACKS: ExperienceTrack[] = ['All', 'Data Analysis', 'Leadership']
+
 function Experience() {
+  const [filter, setFilter] = useState<ExperienceTrack>('All')
   const [hovered, setHovered] = useState<number | null>(null)
+  const items = filter === 'All' ? EXPERIENCE : EXPERIENCE.filter(e => e.track === filter)
 
   return (
     <section
@@ -868,11 +893,37 @@ function Experience() {
             fontWeight: 400,
             fontStyle: 'italic',
             color: 'var(--text)',
-            marginBottom: '4rem',
+            marginBottom: '2rem',
           }}
         >
           Where I've worked.
         </h2>
+
+        <div className="reveal reveal-delay-2" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+          {EXPERIENCE_TRACKS.map(track => (
+            <button
+              key={track}
+              onClick={() => setFilter(track)}
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '0.4rem 1rem',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: filter === track ? 'rgba(139,92,246,0.5)' : 'rgba(139,92,246,0.18)',
+                background: filter === track ? 'rgba(124,58,237,0.15)' : 'transparent',
+                color: filter === track ? 'var(--violet-light)' : 'var(--text-muted)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {track}
+            </button>
+          ))}
+        </div>
 
         <div style={{ position: 'relative', paddingLeft: 32 }}>
           {/* Timeline vertical line */}
@@ -887,11 +938,11 @@ function Experience() {
             }}
           />
 
-          {EXPERIENCE.map((exp, i) => (
+          {items.map((exp, i) => (
             <div
-              key={i}
-              className="reveal"
-              style={{ position: 'relative', marginBottom: i < EXPERIENCE.length - 1 ? '3.5rem' : 0, transitionDelay: `${i * 0.1}s` }}
+              key={exp.role}
+              className="reveal visible"
+              style={{ position: 'relative', marginBottom: i < items.length - 1 ? '3.5rem' : 0 }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -930,9 +981,14 @@ function Experience() {
                       {exp.org}
                     </p>
                   </div>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 400, color: 'var(--text-subtle)', whiteSpace: 'nowrap', paddingTop: 2 }}>
-                    {exp.dates}
-                  </span>
+                  <div style={{ textAlign: 'right' }}>
+                    <span style={{ display: 'block', fontSize: '0.78rem', fontWeight: 400, color: 'var(--text-subtle)', whiteSpace: 'nowrap' }}>
+                      {exp.dates}
+                    </span>
+                    <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--pink-light)', marginTop: '0.3rem' }}>
+                      {exp.track}
+                    </span>
+                  </div>
                 </div>
                 <p style={{ fontSize: '0.92rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75, margin: '0.85rem 0 1rem' }}>
                   {exp.desc}
@@ -951,7 +1007,54 @@ function Experience() {
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
-const CATEGORIES: ProjectCategory[] = ['All', 'Web', 'Data', 'AI', 'Design', 'Other']
+const CATEGORIES: ProjectCategory[] = ['All', 'Actuarial & Finance', 'Data Analysis', 'Project & Reading']
+
+function ProjectVisual({ category, large }: { category: Exclude<ProjectCategory, 'All'>; large?: boolean }) {
+  return (
+    <div
+      style={{
+        height: large ? 320 : 200,
+        position: 'relative',
+        background: 'linear-gradient(135deg, rgba(124,58,237,0.22), rgba(219,39,119,0.14))',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+      }}
+    >
+      <span
+        className="font-display"
+        aria-hidden="true"
+        style={{
+          fontSize: large ? '9rem' : '6rem',
+          fontStyle: 'italic',
+          color: 'rgba(237,233,255,0.14)',
+          lineHeight: 1,
+        }}
+      >
+        {PROJECT_SYMBOL[category]}
+      </span>
+      <span
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          background: 'rgba(124,58,237,0.25)',
+          border: '1px solid rgba(139,92,246,0.3)',
+          color: 'var(--violet-light)',
+          fontSize: '0.68rem',
+          fontWeight: 600,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          padding: '0.2rem 0.6rem',
+          borderRadius: 2,
+        }}
+      >
+        {category}
+      </span>
+    </div>
+  )
+}
 
 function ProjectCard({
   project,
@@ -985,61 +1088,7 @@ function ProjectCard({
         cursor: 'default',
       }}
     >
-      <div
-        style={{
-          height: large ? 320 : 200,
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
-        <img
-          src={project.image}
-          alt={project.title}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            filter: 'saturate(0.65) brightness(0.7)',
-            transition: 'transform 0.5s ease, filter 0.4s ease',
-          }}
-          onMouseEnter={e => {
-            ;(e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)'
-            ;(e.currentTarget as HTMLImageElement).style.filter = 'saturate(0.5) brightness(0.55)'
-          }}
-          onMouseLeave={e => {
-            ;(e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'
-            ;(e.currentTarget as HTMLImageElement).style.filter = 'saturate(0.65) brightness(0.7)'
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '50%',
-            background: 'linear-gradient(to top, rgba(9,6,32,0.95), transparent)',
-          }}
-        />
-        <span
-          style={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            background: 'rgba(124,58,237,0.25)',
-            border: '1px solid rgba(139,92,246,0.3)',
-            color: 'var(--violet-light)',
-            fontSize: '0.68rem',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            padding: '0.2rem 0.6rem',
-            borderRadius: 2,
-          }}
-        >
-          {project.category}
-        </span>
-      </div>
+      <ProjectVisual category={project.category} large={large} />
       <div style={{ padding: '1.5rem' }}>
         <h3 style={{ fontSize: large ? '1.35rem' : '1.05rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.5rem' }}>
           {project.title}
@@ -1351,39 +1400,134 @@ function Competitions() {
         </h2>
 
         <div
+          className="reveal glow-border"
+          style={{
+            padding: '2rem',
+            border: '1px solid rgba(219,39,119,0.35)',
+            borderRadius: 3,
+            background: 'rgba(219,39,119,0.05)',
+            position: 'relative',
+            marginBottom: '5rem',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 2,
+              background: 'linear-gradient(90deg, var(--violet), var(--magenta))',
+              borderRadius: '3px 3px 0 0',
+            }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--pink-light)' }}>
+              {FEATURED_COMPETITION.result}
+            </span>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>{FEATURED_COMPETITION.year}</span>
+          </div>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.75rem' }}>
+            {FEATURED_COMPETITION.name}
+          </h3>
+          <p style={{ fontSize: '0.88rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75 }}>
+            {FEATURED_COMPETITION.desc}
+          </p>
+        </div>
+
+        <p className="reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--violet-light)', marginBottom: '2.5rem' }}>
+          Case & Hackathon Competitions
+        </p>
+
+        <div style={{ position: 'relative', paddingLeft: 32 }}>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: 1,
+              background: 'linear-gradient(to bottom, rgba(219,39,119,0.45), rgba(124,58,237,0.25), transparent)',
+            }}
+          />
+          {CASE_COMPETITIONS.map((c, i) => (
+            <div
+              key={c.name}
+              className="reveal"
+              style={{ position: 'relative', marginBottom: i < CASE_COMPETITIONS.length - 1 ? '2.5rem' : 0, transitionDelay: `${i * 0.08}s` }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  left: -37,
+                  top: 8,
+                  width: 12,
+                  height: 12,
+                  borderRadius: '50%',
+                  border: `1.5px solid ${c.upcoming ? 'var(--magenta)' : 'rgba(124,58,237,0.4)'}`,
+                  background: c.upcoming ? 'rgba(219,39,119,0.3)' : 'rgba(124,58,237,0.15)',
+                }}
+              />
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text)' }}>{c.name}</h3>
+                <span style={{ fontSize: '0.78rem', color: c.upcoming ? 'var(--pink-light)' : 'var(--text-subtle)', fontWeight: c.upcoming ? 600 : 400 }}>
+                  {c.year}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.82rem', fontWeight: 500, color: 'var(--violet-light)', marginBottom: c.desc ? '0.5rem' : 0 }}>
+                {c.result}
+              </p>
+              {c.desc && (
+                <p style={{ fontSize: '0.88rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75 }}>
+                  {c.desc}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Certifications ───────────────────────────────────────────────────────────
+
+function Certifications() {
+  return (
+    <section
+      id="certifications"
+      style={{ padding: 'clamp(80px, 12vw, 140px) clamp(1.5rem, 8vw, 8rem)' }}
+    >
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <p className="reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--violet-light)', marginBottom: '1.25rem' }}>
+          Certifications
+        </p>
+        <h2
+          className="font-display reveal reveal-delay-1"
+          style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', fontWeight: 400, fontStyle: 'italic', color: 'var(--text)', marginBottom: '4rem' }}
+        >
+          Exams passed.
+        </h2>
+
+        <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
             gap: '1.5rem',
           }}
         >
-          {COMPETITIONS.map((comp, i) => (
+          {CERTIFICATIONS.map((cert, i) => (
             <div
-              key={i}
+              key={cert.name}
               className="reveal glow-border"
               style={{
                 padding: '2rem',
-                border: '1px solid',
-                borderColor: comp.accent ? 'rgba(219,39,119,0.35)' : 'var(--border)',
+                border: '1px solid var(--border)',
                 borderRadius: 3,
-                background: comp.accent ? 'rgba(219,39,119,0.05)' : 'var(--surface)',
-                position: 'relative',
+                background: 'var(--surface)',
                 transitionDelay: `${i * 0.1}s`,
               }}
             >
-              {comp.accent && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 2,
-                    background: 'linear-gradient(90deg, var(--violet), var(--magenta))',
-                    borderRadius: '3px 3px 0 0',
-                  }}
-                />
-              )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                 <span
                   style={{
@@ -1391,18 +1535,18 @@ function Competitions() {
                     fontWeight: 600,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
-                    color: comp.accent ? 'var(--pink-light)' : 'var(--violet-light)',
+                    color: 'var(--violet-light)',
                   }}
                 >
-                  {comp.result}
+                  {cert.status}
                 </span>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>{comp.year}</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>{cert.body}</span>
               </div>
-              <h3 style={{ fontSize: comp.accent ? '1.2rem' : '1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.75rem' }}>
-                {comp.name}
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.75rem' }}>
+                {cert.name}
               </h3>
               <p style={{ fontSize: '0.88rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75 }}>
-                {comp.desc}
+                {cert.desc}
               </p>
             </div>
           ))}
@@ -1473,14 +1617,16 @@ function Education() {
                     {edu.awards}
                   </p>
                 )}
-                <div style={{ marginBottom: '0.75rem' }}>
-                  <p style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
-                    Coursework
-                  </p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                    {edu.coursework.map(c => <span key={c} className="skill-tag">{c}</span>)}
+                {edu.coursework.length > 0 && (
+                  <div style={{ marginBottom: '0.75rem' }}>
+                    <p style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
+                      Coursework
+                    </p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      {edu.coursework.map(c => <span key={c} className="skill-tag">{c}</span>)}
+                    </div>
                   </div>
-                </div>
+                )}
                 <p style={{ fontSize: '0.85rem', fontWeight: 300, color: 'var(--text-subtle)' }}>
                   {edu.activities.join(' · ')}
                 </p>
@@ -1494,6 +1640,57 @@ function Education() {
 }
 
 // ─── Hobbies ──────────────────────────────────────────────────────────────────
+
+function HobbyCard({ hobby }: { hobby: typeof HOBBIES[number] }) {
+  return (
+    <div
+      className="hobby-img glow-border"
+      style={{
+        position: 'relative',
+        borderRadius: 3,
+        overflow: 'hidden',
+        aspectRatio: hobby.wide ? '16/9' : '3/4',
+        border: '1px solid var(--border)',
+        background: 'linear-gradient(135deg, rgba(124,58,237,0.18), rgba(219,39,119,0.12))',
+      }}
+    >
+      <span
+        className="font-display"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: hobby.wide ? '5rem' : '3.5rem',
+          fontStyle: 'italic',
+          color: 'rgba(237,233,255,0.12)',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {hobby.mark}
+      </span>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(6,4,16,0.92) 0%, rgba(6,4,16,0.15) 55%, transparent)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          padding: hobby.wide ? '1.5rem' : '1.25rem',
+        }}
+      >
+        <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: hobby.wide ? 'var(--pink-light)' : 'var(--violet-light)', marginBottom: '0.4rem' }}>
+          {hobby.name}
+        </p>
+        <p className="caption" style={{ fontSize: hobby.wide ? '0.88rem' : '0.82rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+          {hobby.caption}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 function Hobbies() {
   const wide = HOBBIES.filter(h => h.wide)
@@ -1515,93 +1712,29 @@ function Hobbies() {
           Life outside the screen.
         </h2>
 
-        {/* Narrow row */}
+        {/* Wide row */}
         <div
           className="reveal reveal-delay-2"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '1rem',
             marginBottom: '1rem',
           }}
         >
-          {narrow.map(h => (
-            <div
-              key={h.name}
-              className="hobby-img"
-              style={{
-                position: 'relative',
-                borderRadius: 3,
-                overflow: 'hidden',
-                aspectRatio: '3/4',
-                border: '1px solid var(--border)',
-              }}
-            >
-              <img src={h.image} alt={h.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(6,4,16,0.9) 0%, rgba(6,4,16,0.2) 50%, transparent)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  padding: '1.25rem',
-                }}
-              >
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--violet-light)', marginBottom: '0.4rem' }}>
-                  {h.name}
-                </p>
-                <p className="caption" style={{ fontSize: '0.82rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                  {h.caption}
-                </p>
-              </div>
-            </div>
-          ))}
+          {wide.map(h => <HobbyCard key={h.name} hobby={h} />)}
         </div>
 
-        {/* Wide row */}
+        {/* Narrow row */}
         <div
           className="reveal reveal-delay-3"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
             gap: '1rem',
           }}
         >
-          {wide.map(h => (
-            <div
-              key={h.name}
-              className="hobby-img"
-              style={{
-                position: 'relative',
-                borderRadius: 3,
-                overflow: 'hidden',
-                aspectRatio: '16/9',
-                border: '1px solid var(--border)',
-              }}
-            >
-              <img src={h.image} alt={h.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(6,4,16,0.9) 0%, rgba(6,4,16,0.2) 50%, transparent)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  padding: '1.5rem',
-                }}
-              >
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--pink-light)', marginBottom: '0.4rem' }}>
-                  {h.name}
-                </p>
-                <p className="caption" style={{ fontSize: '0.88rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                  {h.caption}
-                </p>
-              </div>
-            </div>
-          ))}
+          {narrow.map(h => <HobbyCard key={h.name} hobby={h} />)}
         </div>
       </div>
     </section>
@@ -1611,12 +1744,10 @@ function Hobbies() {
 // ─── Contact ──────────────────────────────────────────────────────────────────
 
 function Contact() {
-  const mouseRef = useRef({ x: 0, y: 0 })
   const orbRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onMove = (e: globalThis.MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
       if (orbRef.current) {
         const rect = orbRef.current.parentElement!.getBoundingClientRect()
         const dx = (e.clientX - rect.left - rect.width / 2) * 0.06
@@ -1629,15 +1760,14 @@ function Contact() {
   }, [])
 
   const socials = [
-    { label: 'Email', href: 'mailto:grace@example.com', value: 'grace@example.com' },
-    { label: 'LinkedIn', href: '#', value: '/in/grace' },
-    { label: 'GitHub', href: '#', value: '@gracecodes' },
-    { label: 'Instagram', href: '#', value: '@grace.creates' },
+    { label: 'Email', href: 'mailto:qigrace0@gmail.com', value: 'qigrace0@gmail.com' },
+    { label: 'GitHub', href: 'https://github.com/Grace704', value: '@Grace704' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/grace-qi-56a19831a/', value: '/in/grace-qi' },
   ]
 
   return (
     <section
-      id="hobbies"
+      id="contact"
       style={{
         padding: 'clamp(100px, 14vw, 180px) clamp(1.5rem, 8vw, 8rem)',
         position: 'relative',
@@ -1689,13 +1819,11 @@ function Contact() {
             fontWeight: 300,
             color: 'var(--text-muted)',
             lineHeight: 1.75,
-            marginBottom: '3.5rem',
             maxWidth: 480,
             margin: '0 auto 3.5rem',
           }}
         >
-          Open to new opportunities, collaborations, and interesting conversations.
-          Don't hesitate to reach out.
+          Open to actuarial, data analysis, and quantitative finance opportunities — feel free to reach out.
         </p>
 
         <div
@@ -1742,7 +1870,7 @@ function Contact() {
         </div>
 
         <p className="reveal reveal-delay-4" style={{ fontSize: '0.78rem', color: 'var(--text-subtle)', fontFamily: 'var(--font-body)' }}>
-          © 2026 Grace. Designed & built with care.
+          © 2026 Grace Qi. Built with care.
         </p>
       </div>
     </section>
@@ -1787,6 +1915,7 @@ export default function App() {
         <Projects />
         <Skills />
         <Competitions />
+        <Certifications />
         <Education />
         <Hobbies />
         <Contact />
