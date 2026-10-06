@@ -76,14 +76,13 @@ const EXPERIENCE: {
   },
 ]
 
-type ProjectCategory = 'All' | 'Actuarial & Finance' | 'Data Analysis' | 'Project & Reading'
+type ProjectCategory = 'All' | 'Actuarial & Finance' | 'Data Analysis' | 'Project & Research'
 
 const PROJECTS: {
   title: string
   desc: string
   tags: string[]
   category: Exclude<ProjectCategory, 'All'>
-  featured: boolean
   github?: string
   demo?: string
 }[] = [
@@ -92,7 +91,6 @@ const PROJECTS: {
     desc: 'A Python platform that takes a stock ticker and builds a full valuation pipeline — DCF, comparable, and P/E-based models layered with Monte Carlo simulation and sensitivity analysis to estimate intrinsic value under uncertainty.',
     tags: ['Python', 'pandas', 'yfinance', 'Statistics', 'Valuation'],
     category: 'Actuarial & Finance',
-    featured: true,
     github: '#',
   },
   {
@@ -100,14 +98,12 @@ const PROJECTS: {
     desc: 'A productivity analytics platform for tracking academics, career preparation, goals, reflection, and daily priorities in one minimalist dashboard.',
     tags: ['Productivity', 'Data', 'Personal Analytics'],
     category: 'Data Analysis',
-    featured: false,
   },
   {
-    title: 'Directed Reading Program',
+    title: 'Reading: Random Walks on Finite Groups',
     desc: 'A guided reading program on random walks on finite groups, exploring how probability and algebra combine to explain how randomness spreads and mixes over time.',
     tags: ['Probability', 'Markov Chains', 'Group Theory'],
-    category: 'Project & Reading',
-    featured: false,
+    category: 'Project & Research',
   },
 ]
 
@@ -115,7 +111,7 @@ const PROJECT_SYMBOL: Record<ProjectCategory, string> = {
   All: 'π',
   'Actuarial & Finance': 'Σ',
   'Data Analysis': '∫',
-  'Project & Reading': '∼',
+  'Project & Research': '∼',
 }
 
 const SKILL_CATEGORIES = ['Actuarial & Quant', 'Data & Programming', 'AI & ML'] as const
@@ -161,14 +157,13 @@ const FEATURED_COMPETITION = {
 const CASE_COMPETITIONS: {
   name: string
   year: string
-  result: string
+  result?: string
   desc: string
   upcoming?: boolean
 }[] = [
   {
     name: 'ASNA Case Competition',
     year: 'Upcoming',
-    result: 'In preparation',
     desc: 'Preparing for this upcoming case competition.',
     upcoming: true,
   },
@@ -181,25 +176,21 @@ const CASE_COMPETITIONS: {
   {
     name: 'SOA Case Study Competition',
     year: 'March 2026',
-    result: 'Case competition',
     desc: 'Analyzed a space insurance case study with my team and developed a recommendation for the product.',
   },
   {
     name: 'RISCC',
     year: 'February 2026',
-    result: 'Case competition',
     desc: 'Worked with a team to build a customized life insurance recommendation for a family, based on their needs and financial situation.',
   },
   {
     name: 'Waterloo Consulting Case Competition',
     year: 'Winter 2026',
-    result: 'Case competition',
     desc: 'Led data analysis, cleaning, and visualization for a case on how much Aramco should invest in new energy, and helped size and defend the investment split across areas.',
   },
   {
     name: 'UTD ASA Case Competition',
     year: 'Fall 2025',
-    result: 'Case competition',
     desc: 'Taught myself loss triangles and the chain ladder method in my first case competition to build and present a reserving recommendation for a workers\' compensation case.',
   },
   {
@@ -232,6 +223,7 @@ const EDUCATION = [
     years: '2025 – Present',
     coursework: ['MATH 135', 'MATH 138', 'MATH 237', 'MATH 235', 'STAT 230', 'CS 135', 'CS 136', 'ECON 101'],
     activities: ['Orientation Leader', 'Directed Reading Program (Fall 2026)', 'Math Club'],
+    sports: [] as string[],
     awards: '~85% average, working toward 90%+',
   },
   {
@@ -239,16 +231,18 @@ const EDUCATION = [
     program: 'High School Diploma',
     years: 'Manitoba',
     coursework: [] as string[],
-    activities: ['Robotics Club Founder', 'Math Club', 'Ping-Pong Club', 'Table Tennis'],
+    activities: ['Robotics Club Founder', 'Math Club Leader', 'Ping-Pong Club Leader'],
+    sports: ['Track and Field', 'Badminton', 'Basketball Team'],
     awards: '',
   },
   {
     school: 'University of Manitoba',
-    program: 'MATH 136 (Concurrent Study)',
-    years: '2025',
-    coursework: ['MATH 136'],
+    program: 'Concurrent Study, Mathematics',
+    years: 'Completed 2025',
+    coursework: ['MATH 136', 'MATH 137'],
     activities: ['Completed while in high school'],
-    awards: 'Grade: A',
+    sports: [] as string[],
+    awards: 'MATH 136: A · MATH 137: 100% (A+, transfer credit)',
   },
 ]
 
@@ -1007,8 +1001,6 @@ function Experience() {
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
-const CATEGORIES: ProjectCategory[] = ['All', 'Actuarial & Finance', 'Data Analysis', 'Project & Reading']
-
 function ProjectVisual({ category, large }: { category: Exclude<ProjectCategory, 'All'>; large?: boolean }) {
   return (
     <div
@@ -1147,10 +1139,6 @@ function ProjectCard({
 }
 
 function Projects() {
-  const [filter, setFilter] = useState<ProjectCategory>('All')
-  const filtered = filter === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
-  const featured = filtered.find(p => p.featured)
-  const rest = filtered.filter(p => !p.featured)
 
   return (
     <section
@@ -1159,7 +1147,7 @@ function Projects() {
     >
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <p className="reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--violet-light)', marginBottom: '1.25rem' }}>
-          Projects
+          Project & Reading
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1.5rem', marginBottom: '3rem' }}>
           <h2
@@ -1168,38 +1156,7 @@ function Projects() {
           >
             Things I've built.
           </h2>
-          <div className="reveal reveal-delay-2" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.75rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  padding: '0.4rem 1rem',
-                  borderRadius: 2,
-                  border: '1px solid',
-                  borderColor: filter === cat ? 'rgba(139,92,246,0.5)' : 'rgba(139,92,246,0.18)',
-                  background: filter === cat ? 'rgba(124,58,237,0.15)' : 'transparent',
-                  color: filter === cat ? 'var(--violet-light)' : 'var(--text-muted)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
-
-        {featured && (
-          <div className="reveal" style={{ marginBottom: '1.5rem' }}>
-            <ProjectCard project={featured} large />
-          </div>
-        )}
 
         <div
           className="reveal reveal-delay-1"
@@ -1209,7 +1166,7 @@ function Projects() {
             gap: '1.5rem',
           }}
         >
-          {rest.map(p => (
+          {PROJECTS.map(p => (
             <ProjectCard key={p.title} project={p} />
           ))}
         </div>
@@ -1474,9 +1431,11 @@ function Competitions() {
                   {c.year}
                 </span>
               </div>
-              <p style={{ fontSize: '0.82rem', fontWeight: 500, color: 'var(--violet-light)', marginBottom: c.desc ? '0.5rem' : 0 }}>
-                {c.result}
-              </p>
+              {c.result && (
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, color: 'var(--violet-light)', marginBottom: c.desc ? '0.5rem' : 0 }}>
+                  {c.result}
+                </p>
+              )}
               {c.desc && (
                 <p style={{ fontSize: '0.88rem', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.75 }}>
                   {c.desc}
@@ -1630,6 +1589,11 @@ function Education() {
                 <p style={{ fontSize: '0.85rem', fontWeight: 300, color: 'var(--text-subtle)' }}>
                   {edu.activities.join(' · ')}
                 </p>
+                {edu.sports.length > 0 && (
+                  <p style={{ fontSize: '0.85rem', fontWeight: 300, color: 'var(--text-subtle)', marginTop: '0.35rem' }}>
+                    {edu.sports.join(' · ')}
+                  </p>
+                )}
               </div>
             </div>
           ))}
