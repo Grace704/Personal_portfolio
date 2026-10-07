@@ -25,11 +25,12 @@ const EXPERIENCE: {
   desc: string
   tags: string[]
   track: Exclude<ExperienceTrack, 'All'>
+  award?: string
 }[] = [
   {
-    role: 'Data Analyst',
+    role: 'Technology & Data Analyst',
     org: 'EcoServants',
-    dates: '2026',
+    dates: 'Apr 2026 – Present',
     desc: 'Analyzed website traffic, survey data, and IRS / ProPublica foundation records to support a nonprofit’s digital strategy and funding research.',
     tags: ['Python', 'R', 'pandas', 'Google Analytics'],
     track: 'Data Analysis',
@@ -37,6 +38,7 @@ const EXPERIENCE: {
   {
     role: 'Assistant Manager',
     org: 'Dairy Queen Grill & Chill',
+    award: 'Co-op Award Nominee',
     dates: 'May – Aug 2026',
     desc: 'Ran daily store operations — opening, inventory, cake prep, and crew scheduling. Trained and interviewed new employees, and took on full manager responsibilities during a manager’s absence.',
     tags: ['Operations', 'Training', 'Customer Service'],
@@ -76,7 +78,7 @@ const EXPERIENCE: {
   },
 ]
 
-type ProjectCategory = 'All' | 'Actuarial & Finance' | 'Data Analysis' | 'Project & Research'
+type ProjectCategory = 'Actuarial & Finance' | 'Data Analysis' | 'Pure Mathematics'
 
 const PROJECTS: {
   title: string
@@ -103,15 +105,14 @@ const PROJECTS: {
     title: 'Reading: Random Walks on Finite Groups',
     desc: 'A guided reading program on random walks on finite groups, exploring how probability and algebra combine to explain how randomness spreads and mixes over time.',
     tags: ['Probability', 'Markov Chains', 'Group Theory'],
-    category: 'Project & Research',
+    category: 'Pure Mathematics',
   },
 ]
 
 const PROJECT_SYMBOL: Record<ProjectCategory, string> = {
-  All: 'π',
   'Actuarial & Finance': 'Σ',
   'Data Analysis': '∫',
-  'Project & Research': '∼',
+  'Pure Mathematics': '∼',
 }
 
 const SKILL_CATEGORIES = ['Actuarial & Quant', 'Data & Programming', 'AI & ML'] as const
@@ -290,15 +291,15 @@ interface Particle {
 }
 
 function createParticle(w: number, h: number): Particle {
-  const blurred = Math.random() < 0.28
+  const blurred = Math.random() < 0.4
   return {
     x: Math.random() * w,
     y: Math.random() * h,
     vx: (Math.random() - 0.5) * 0.25,
     vy: Math.random() * 0.35 + 0.08,
-    size: blurred ? Math.random() * 5 + 3 : Math.random() * 1.4 + 0.4,
-    opacity: blurred ? Math.random() * 0.1 + 0.03 : Math.random() * 0.45 + 0.08,
-    hue: Math.random() * 80 + 255,
+    size: blurred ? Math.random() * 50 + 15 : Math.random() * 2.2 + 0.8,
+    opacity: blurred ? Math.random() * 0.1 + 0.12 : Math.random() * 0.45 + 0.08,
+    hue: Math.random() * 360,
     blurred,
     parallaxFactor: blurred ? 0.7 : Math.random() * 0.35 + 0.05,
   }
@@ -326,7 +327,7 @@ function ParticleCanvas() {
     window.addEventListener('resize', resize)
 
     const isMobile = window.innerWidth < 768
-    const count = isMobile ? 40 : 75
+    const count = isMobile ? 120 : 260
     const particles = Array.from({ length: count }, () => createParticle(canvas.width, canvas.height))
 
     const onMouse = (e: globalThis.MouseEvent) => {
@@ -352,7 +353,7 @@ function ParticleCanvas() {
         ctx.save()
         ctx.globalAlpha = p.opacity
         if (p.blurred) {
-          ctx.shadowBlur = p.size * 4
+          ctx.shadowBlur = Math.min(p.size * 4, 80)
           ctx.shadowColor = `hsl(${p.hue}, 75%, 75%)`
         }
         ctx.fillStyle = `hsl(${p.hue}, 75%, 75%)`
@@ -703,22 +704,35 @@ function Hero() {
             About Me
           </button>
         </div>
+
+        <div className="flex flex-wrap gap-5 justify-center reveal reveal-delay-4" style={{ marginTop: '1.75rem' }}>
+          {[
+            { label: 'Resume', href: '/Grace_Qi_Resume.pdf' },
+            { label: 'LinkedIn', href: 'https://linkedin.com/in/grace-qi-56a19831a/' },
+            { label: 'GitHub', href: 'https://github.com/Grace704' },
+            { label: 'Email', href: 'mailto:qigrace0@gmail.com' },
+          ].map(link => (
+            <a
+              key={link.label}
+              href={link.href}
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.78rem',
+                fontWeight: 500,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--violet-light)',
+                textDecoration: 'none',
+                borderBottom: '1px solid rgba(167,139,250,0.3)',
+                paddingBottom: '0.1rem',
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        className="absolute bottom-10"
-        style={{ zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}
-      >
-        <div
-          style={{
-            width: 1,
-            height: 48,
-            background: 'linear-gradient(to bottom, var(--violet-light), transparent)',
-            opacity: 0.5,
-          }}
-        />
-      </div>
     </section>
   )
 }
@@ -971,6 +985,11 @@ function Experience() {
                     <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.15rem' }}>
                       {exp.role}
                     </h3>
+                    {exp.award && (
+                      <p style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--pink-light)', marginBottom: '0.2rem' }}>
+                        {exp.award}
+                      </p>
+                    )}
                     <p style={{ fontSize: '0.88rem', fontWeight: 400, color: 'var(--violet-light)' }}>
                       {exp.org}
                     </p>

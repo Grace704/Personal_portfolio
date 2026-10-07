@@ -2,8 +2,8 @@
 @import 'tailwindcss';
 
 :root {
-  --bg: #060410;
-  --navy: #090620;
+  --bg: #000000;
+  --navy: #05041a;
   --surface: rgba(139, 92, 246, 0.06);
   --surface-hover: rgba(139, 92, 246, 0.11);
   --border: rgba(139, 92, 246, 0.18);
@@ -14,9 +14,9 @@
   --magenta: #db2777;
   --violet-light: #a78bfa;
   --pink-light: #f472b6;
-  --text: #ede9ff;
-  --text-muted: rgba(237, 233, 255, 0.5);
-  --text-subtle: rgba(237, 233, 255, 0.28);
+  --text: #ffffff;
+  --text-muted: rgba(245, 243, 255, 0.92);
+  --text-subtle: rgba(245, 243, 255, 0.72);
   --glow-violet: 0 0 80px rgba(124, 58, 237, 0.18);
   --glow-pink: 0 0 80px rgba(219, 39, 119, 0.14);
   --font-display: 'Instrument Serif', Georgia, serif;
